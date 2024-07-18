@@ -1,5 +1,6 @@
 import {
 	App,
+	Editor,
 	MarkdownView,
 	Modal,
 	Notice,
@@ -16,6 +17,7 @@ interface PostMediumDraftPluginSettings {
 	tokenIsValid: boolean;
 	userName?: string;
 	userProperName?: string;
+	userId?: string;
 }
 
 const DEFAULT_SETTINGS: PostMediumDraftPluginSettings = {
@@ -26,9 +28,46 @@ const DEFAULT_SETTINGS: PostMediumDraftPluginSettings = {
 export default class PostMediumDraftPlugin extends Plugin {
 	settings: PostMediumDraftPluginSettings;
 
-	async publishToMedium() {
-		console.log('now is when a post call would be made to medium');
-		new Notice('This would make a call to post to Medium as a draft!');
+	async publishToMedium(view: MarkdownView) {
+		if (!view || !view.file) {
+			new Notice('Failed to post: No file in active view!');
+			return;
+		}
+
+		if (!this.settings.tokenIsValid) {
+			new Notice('Please check your Medium token');
+			return;
+		}
+
+		const body = {
+			"title": view.file.basename,
+			"content": view.getViewData(),
+			"contentFormat": "markdown",
+			"publishStatus": "draft",
+		}
+
+		try {
+			const reqBody = {
+				url: `https://api.medium.com/v1/users/${this.settings.userId}/posts`,
+				method: 'POST',
+				headers: {
+					'Authorization': `Bearer ${this.settings.userMediumToken}`,
+					'Content-Type': 'application/json',
+					'Accept': 'application/json',
+					'Accept-Charset': 'utf-8',
+				},
+				body: JSON.stringify(body),
+			};
+			const response = await request(reqBody);
+			const data = JSON.parse(response);
+			console.log('SUCCESSFUL POST:', data);
+
+			const message = `Posted Medium draft: ${data.data.url}`;
+			new Notice(message);
+		} catch (error) {
+			console.log('error while posting to Medium:', error);
+			new Notice(`Failed to post to Medium: ${error}`);
+		}
 	}
 
 	async onload() {
@@ -37,8 +76,14 @@ export default class PostMediumDraftPlugin extends Plugin {
 		// This creates an icon in the left ribbon.
 		const ribbonIconPost = this.addRibbonIcon('monitor-up', 'Post Medium Draft', (evt: MouseEvent) => {
 			// Called when the user clicks the icon.
+			const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+			if (!view) {
+				new Notice('Failed to post: No file in active view!');
+				return;
+			}
+
 			if (evt.which && evt.which === 1) {
-				this.publishToMedium();
+				this.publishToMedium(view);
 			}
 		});
 		ribbonIconPost.addClass('post-medium-ribbon-class');
@@ -47,8 +92,8 @@ export default class PostMediumDraftPlugin extends Plugin {
 		this.addCommand({
 			id: 'post-medium-draft',
 			name: 'Post to Medium as a draft',
-			callback: () => {
-				this.publishToMedium();
+			editorCallback: (_, view: MarkdownView) => {
+				this.publishToMedium(view);
 			}
 		});
 
@@ -103,6 +148,7 @@ export default class PostMediumDraftPlugin extends Plugin {
 			const properName = data.data.name;
 			this.settings.userName = username;
 			this.settings.userProperName = properName;
+			this.settings.userId = data.data.id;
 			this.settings.tokenIsValid = true;
 			// await this.saveSettings();
 
