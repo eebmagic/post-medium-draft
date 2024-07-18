@@ -30,7 +30,7 @@ export default class PostMediumDraftPlugin extends Plugin {
 		await this.loadSettings();
 
 		// This creates an icon in the left ribbon.
-		const ribbonIconPost = this.addRibbonIcon('dice', 'Post Medium Draft', (evt: MouseEvent) => {
+		const ribbonIconPost = this.addRibbonIcon('monitor-up', 'Post Medium Draft', (evt: MouseEvent) => {
 			// Called when the user clicks the icon.
 			new Notice('This would post to Medium!');
 		});
@@ -90,12 +90,8 @@ export default class PostMediumDraftPlugin extends Plugin {
 					'Accept': 'application/json',
 				}
 			});
-			console.log('Got fetch response');
-			console.log(response);
 
 			const data = JSON.parse(response);
-			console.log('Converted to JSON data:');
-			console.log(data);
 
 			const username = data.data.username;
 			const properName = data.data.name;
@@ -168,8 +164,6 @@ class SampleSettingTab extends PluginSettingTab {
 					console.log('UPDATED MEDIUM TOKEN. Now checking if it is valid');
 					if (value) {
 						const result = await this.plugin.checkValidToken(value)
-						console.log('Got result');
-						console.log(result);
 						if (result.state === 'success') {
 							const username = result.data.data.username;
 							const message = `Token is valid! User Name: ${username}`;
