@@ -26,13 +26,20 @@ const DEFAULT_SETTINGS: PostMediumDraftPluginSettings = {
 export default class PostMediumDraftPlugin extends Plugin {
 	settings: PostMediumDraftPluginSettings;
 
+	async publishToMedium() {
+		console.log('now is when a post call would be made to medium');
+		new Notice('This would make a call to post to Medium as a draft!');
+	}
+
 	async onload() {
 		await this.loadSettings();
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconPost = this.addRibbonIcon('monitor-up', 'Post Medium Draft', (evt: MouseEvent) => {
 			// Called when the user clicks the icon.
-			new Notice('This would post to Medium!');
+			if (evt.which && evt.which === 1) {
+				this.publishToMedium();
+			}
 		});
 		ribbonIconPost.addClass('post-medium-ribbon-class');
 
@@ -41,8 +48,7 @@ export default class PostMediumDraftPlugin extends Plugin {
 			id: 'post-medium-draft',
 			name: 'Post to Medium as a draft',
 			callback: () => {
-				console.log('now is when a post call would be made to medium');
-				new Notice('This would make a call to post to Medium as a draft!');
+				this.publishToMedium();
 			}
 		});
 
