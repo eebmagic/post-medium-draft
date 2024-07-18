@@ -1,0 +1,10 @@
+{
+	"id": "post-medium-draft",
+	"name": "Post Medium Draft",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Posts a note to your medium account as a draft.",
+	"author": "E. Bolton",
+	"authorUrl": "https://github.com/eebmagic/",
+	"isDesktopOnly": false
+}
