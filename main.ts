@@ -199,7 +199,7 @@ class SampleSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('Medium Integration Token')
+			.setName('Medium Service Integration Token')
 			.setDesc('Create one in your Medium account settings under: Security and apps > Integration tokens')
 			.addText(text => text
 				.setPlaceholder('Enter your token')
