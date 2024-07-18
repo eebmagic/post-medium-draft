@@ -10,8 +10,6 @@ import {
 	request,
 } from 'obsidian';
 
-// Remember to rename these classes and interfaces!
-
 interface PostMediumDraftPluginSettings {
 	userMediumToken: string;
 	tokenIsValid: boolean;
@@ -34,7 +32,7 @@ export default class PostMediumDraftPlugin extends Plugin {
 			return;
 		}
 
-		if (!this.settings.tokenIsValid) {
+		if (!this.settings.tokenIsValid || !this.settings.userMediumToken || !this.settings.userId) {
 			new Notice('Please check your Medium token');
 			return;
 		}
@@ -97,21 +95,21 @@ export default class PostMediumDraftPlugin extends Plugin {
 			}
 		});
 
-		this.addCommand({
-			id: 'check-user-metadata',
-			name: 'Check user metadata',
-			callback: () => {
-				if (this.settings.tokenIsValid) {
-					const displayText = [
-						`Username: ${this.settings.userName}`,
-						`Proper Name: ${this.settings.userProperName}`,
-					];
-					new SampleModal(this.app, displayText).open();
-				} else {
-					new Notice('Please check your Medium token');
-				}
-			}
-		});
+		// this.addCommand({
+		// 	id: 'check-user-metadata',
+		// 	name: 'Check user metadata',
+		// 	callback: () => {
+		// 		if (this.settings.tokenIsValid) {
+		// 			const displayText = [
+		// 				`Username: ${this.settings.userName}`,
+		// 				`Proper Name: ${this.settings.userProperName}`,
+		// 			];
+		// 			new SampleModal(this.app, displayText).open();
+		// 		} else {
+		// 			new Notice('Please check your Medium token');
+		// 		}
+		// 	}
+		// });
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new SampleSettingTab(this.app, this));
@@ -150,7 +148,6 @@ export default class PostMediumDraftPlugin extends Plugin {
 			this.settings.userProperName = properName;
 			this.settings.userId = data.data.id;
 			this.settings.tokenIsValid = true;
-			// await this.saveSettings();
 
 			return {
 				state: 'success',
@@ -180,7 +177,6 @@ class SampleModal extends Modal {
 		this.displayText.forEach(element => {
 			contentEl.createEl('p', {text: element});
 		});
-		// contentEl.createEl(this.displayText);
 	}
 
 	onClose() {
