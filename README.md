@@ -21,3 +21,6 @@ Once the plugin is setup then you can trigger a post in two ways:
 Once posted you should see a pop-up indicating the successful request.
 You can then navigate to [your drafts list under your Medium account](https://medium.com/me/stories/drafts) where you will find the result of posting your note.
 
+
+## Disclosures
+**Network use:** This plugin makes `GET` and `POST` http requests to the [Medium API](https://github.com/Medium/medium-api-docs) to get user info (to validate tokens) and to post drafts.
