@@ -89,7 +89,7 @@ export default class PostMediumDraftPlugin extends Plugin {
 		// Add commands
 		this.addCommand({
 			id: 'post-medium-draft',
-			name: 'Post to Medium as a draft',
+			name: 'Send Note',
 			editorCallback: (_, view: MarkdownView) => {
 				this.publishToMedium(view);
 			}
