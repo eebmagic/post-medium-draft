@@ -104,7 +104,7 @@ export default class PostMediumDraftPlugin extends Plugin {
 		// 				`Username: ${this.settings.userName}`,
 		// 				`Proper Name: ${this.settings.userProperName}`,
 		// 			];
-		// 			new SampleModal(this.app, displayText).open();
+		// 			new MetaModal(this.app, displayText).open();
 		// 		} else {
 		// 			new Notice('Please check your Medium token');
 		// 		}
@@ -112,7 +112,7 @@ export default class PostMediumDraftPlugin extends Plugin {
 		// });
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		this.addSettingTab(new SettingTab(this.app, this));
 	}
 
 	onunload() {
@@ -164,7 +164,7 @@ export default class PostMediumDraftPlugin extends Plugin {
 	}
 }
 
-class SampleModal extends Modal {
+class MetaModal extends Modal {
 	displayText: string[];
 
 	constructor(app: App, texts: string | string[] = 'Hello') {
@@ -185,7 +185,7 @@ class SampleModal extends Modal {
 	}
 }
 
-class SampleSettingTab extends PluginSettingTab {
+class SettingTab extends PluginSettingTab {
 	plugin: PostMediumDraftPlugin;
 
 	constructor(app: App, plugin: PostMediumDraftPlugin) {
