@@ -1,6 +1,6 @@
 {
 	"name": "post-medium-draft",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Obsidian plugin to post the current note as a draft to Medium",
 	"main": "main.js",
 	"scripts": {

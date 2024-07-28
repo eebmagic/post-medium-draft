@@ -12,7 +12,6 @@ import {
 
 interface PostMediumDraftPluginSettings {
 	userMediumToken: string;
-	tokenIsValid: boolean;
 	userName?: string;
 	userProperName?: string;
 	userId?: string;
