@@ -20,7 +20,6 @@ interface PostMediumDraftPluginSettings {
 
 const DEFAULT_SETTINGS: PostMediumDraftPluginSettings = {
 	userMediumToken: '',
-	tokenIsValid: false,
 }
 
 export default class PostMediumDraftPlugin extends Plugin {
@@ -32,7 +31,7 @@ export default class PostMediumDraftPlugin extends Plugin {
 			return;
 		}
 
-		if (!this.settings.tokenIsValid || !this.settings.userMediumToken || !this.settings.userId) {
+		if (!this.settings.userMediumToken || !this.settings.userId) {
 			new Notice('Please check your Medium token');
 			return;
 		}
@@ -93,22 +92,6 @@ export default class PostMediumDraftPlugin extends Plugin {
 			}
 		});
 
-		// this.addCommand({
-		// 	id: 'check-user-metadata',
-		// 	name: 'Check user metadata',
-		// 	callback: () => {
-		// 		if (this.settings.tokenIsValid) {
-		// 			const displayText = [
-		// 				`Username: ${this.settings.userName}`,
-		// 				`Proper Name: ${this.settings.userProperName}`,
-		// 			];
-		// 			new MetaModal(this.app, displayText).open();
-		// 		} else {
-		// 			new Notice('Please check your Medium token');
-		// 		}
-		// 	}
-		// });
-
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new SettingTab(this.app, this));
 	}
@@ -145,7 +128,6 @@ export default class PostMediumDraftPlugin extends Plugin {
 			this.settings.userName = username;
 			this.settings.userProperName = properName;
 			this.settings.userId = data.data.id;
-			this.settings.tokenIsValid = true;
 
 			return {
 				state: 'success',
@@ -153,7 +135,6 @@ export default class PostMediumDraftPlugin extends Plugin {
 			};
 		} catch (error) {
 			console.error('Error while checking Medium token:', error);
-			this.settings.tokenIsValid = false;
 			return {
 				state: 'error',
 				error,
