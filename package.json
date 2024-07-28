@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "post-medium-draft",
 	"version": "1.0.2",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Obsidian plugin to post the current note as a draft to Medium",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
