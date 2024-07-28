@@ -72,7 +72,7 @@ export default class PostMediumDraftPlugin extends Plugin {
 		await this.loadSettings();
 
 		// This creates an icon in the left ribbon.
-		const ribbonIconPost = this.addRibbonIcon('monitor-up', 'Post Medium Draft', (evt: MouseEvent) => {
+		const ribbonIconPost = this.addRibbonIcon('monitor-up', 'Post Medium draft', (evt: MouseEvent) => {
 			// Called when the user clicks the icon.
 			const view = this.app.workspace.getActiveViewOfType(MarkdownView);
 			if (!view) {
@@ -199,7 +199,7 @@ class SettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('Medium Service Integration Token')
+			.setName('Medium service integration token')
 			.setDesc('Create one in your Medium account settings under: Security and apps > Integration tokens')
 			.addText(text => text
 				.setPlaceholder('Enter your token')
@@ -214,7 +214,7 @@ class SettingTab extends PluginSettingTab {
 						const result = await this.plugin.checkValidToken(value)
 						if (result.state === 'success') {
 							const username = result.data.data.username;
-							const message = `Token is valid! User Name: ${username}`;
+							const message = `Token is valid! Username: ${username}`;
 							new Notice(message);
 							console.log(message);
 						} else {
