@@ -58,12 +58,10 @@ export default class PostMediumDraftPlugin extends Plugin {
 			};
 			const response = await request(reqBody);
 			const data = JSON.parse(response);
-			console.log('SUCCESSFUL POST:', data);
 
 			const message = `Posted Medium draft: ${data.data.url}`;
 			new Notice(message);
 		} catch (error) {
-			console.log('error while posting to Medium:', error);
 			new Notice(`Failed to post to Medium: ${error}`);
 		}
 	}
@@ -209,18 +207,15 @@ class SettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 
 					// Check if the token is valid
-					console.log('UPDATED MEDIUM TOKEN. Now checking if it is valid');
 					if (value) {
 						const result = await this.plugin.checkValidToken(value)
 						if (result.state === 'success') {
 							const username = result.data.data.username;
 							const message = `Token is valid! Username: ${username}`;
 							new Notice(message);
-							console.log(message);
 						} else {
 							const message = `Token is invalid! Error: ${result.error}`;
 							new Notice(message);
-							console.error(message);
 						}
 					}
 				}));
