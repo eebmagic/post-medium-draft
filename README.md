@@ -1,5 +1,7 @@
 > [!CAUTION]
 > Medium no longer allows ANY API integrations. Meaning new users are unable to create a token for use with this extension, making it pretty useless :(
+> 
+> Read more here: [https://help.medium.com/hc/en-us/articles/213480228-API-Importing]()
 
 # Post Medium Draft
 
