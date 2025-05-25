@@ -1,3 +1,6 @@
+> [!CAUTION]
+> Medium no longer allows ANY API integrations. Meaning new users are unable to create a token for use with this extension, making it pretty useless :(
+
 # Post Medium Draft
 
 An Obsidian plugin that posts the currently open note to your Medium account as a draft.
